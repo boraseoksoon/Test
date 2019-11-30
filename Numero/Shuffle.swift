@@ -53,7 +53,8 @@ extension Sequence {
     }
     
     public func myShuffled() -> [Element] {
-        return self.shuffled()
+        // return self.shuffled()
+        return Array(self)
     }
 }
 
