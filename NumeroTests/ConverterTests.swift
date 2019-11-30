@@ -48,6 +48,57 @@ class ConverterTests: XCTestCase {
     }
 }
 
+class ShuffleTests: XCTestCase {
+    struct MySequence: Sequence, IteratorProtocol {
+        typealias Element = Int
+        
+        var current = 1
+        
+        mutating func next() -> Int? {
+            defer {
+                current *= 2
+            }
+            
+            return current
+        }
+    }
+    
+    var sequence: AnySequence<Int>?
+    var arr: [Int] = [0,1,2,3,4,5,6,7]
+    override func setUp() {
+        super.setUp()
+        
+        ({
+            let sequence = MySequence(current: 1)
+            
+            var i = 0
+            for number in sequence {
+                i += 1
+                if i == 10 { break }
+                
+                print(number)
+            }
+        }())
+        
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+    }
+    
+    func testShuffle() {
+        var result = arr.myShuffled()
+        XCTAssertNotEqual(result, arr)
+        
+        arr = []
+        result = arr.myShuffled()
+        print("arr : ", arr)
+        print("result : ", result)
+        XCTAssertEqual(result, arr)
+    }
+    
+}
+
 //import XCTest
 //@testable import Numero
 //
